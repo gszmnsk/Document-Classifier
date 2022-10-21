@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Classifier</title>
+      <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+    <h1 class="text_center">Document Structure Classifier</h1>
+    <form class="p-3 text-center" action="/" method="post" enctype="multipart/form-data">
+    	<input class="form-control" type="file" name="image_file" />
+        <input class="btn btn-primary mt-3" type="submit" value="Predict Document" />
+    </form>
+
+    {% if prediction %} # if there exists any prediction then display paragraph below
+        <p class="text-center"> Document is a {{ prediction }}</p>
+    {% endif %}
+</body>
+</html>
