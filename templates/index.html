@@ -2,23 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Classifier</title>
-      <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Classifier</title>
 
+    <!-- Google Fonts (Elegant Choice) -->
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS (for better styling) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-    <h1 class="text_center">Document Structure Classifier</h1>
-    <form class="p-3 text-center" action="/" method="post" enctype="multipart/form-data">
-    	<input class="form-control" type="file" name="image_file" />
-        <input class="btn btn-primary mt-3" type="submit" value="Predict Document" />
-    </form>
 
-    {% if prediction %} # if there exists any prediction then display paragraph below
-        <p class="text-center"> Document is a {{ prediction }}</p>
-    {% endif %}
+<body>
+    <div class="container d-flex flex-column justify-content-center align-items-center min-vh-100">
+        <div class="card p-4 shadow-lg text-center" style="max-width: 600px; width: 100%;">
+            <h1 class="mb-4" style="font-family: 'EB Garamond', serif; color: black; font-size: 50px;">Document Classifier</h1>
+
+            <form action="/" method="post" enctype="multipart/form-data" class="mb-3">
+
+                <input class="form-control mb-3" type="file" name="image_file" accept="image/*">
+                <button class="btn btn-primary w-100" type="submit">Predict Document</button>
+            </form>
+
+            {% if prediction %}
+                <div class="mt-4">
+                    <img src="{{ image_path }}" class="img-fluid rounded shadow-sm" style="max-width: 100%; height: auto;">
+                    <p class="mt-3 fw-bold" style="font-family: 'EB Garamond'; font-size: 3em;">📄 Document classified as <span class="text-success">{{ prediction }}</span></p>
+                    <p class="mt-2 text-muted" style="font-family: 'EB Garamond', serif; font-size: 1.5em;">
+                        Confidence: <span class="fw-bold">{{probability}}%</span>
+                    </p>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (for responsiveness) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

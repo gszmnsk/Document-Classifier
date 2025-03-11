@@ -1,0 +1,24 @@
+@startuml
+hide empty description
+[*] --> Data_loading
+Data_loading : Load data from folders
+Data_loading : Folder name = category of document
+Data_loading --> Image_preprocessing: Image dataset List[np.array]
+state Image_preprocessing {
+    Image_preprocessing: for codebook: X[:40], for VQ train_test_split(X,y)
+    Data_denoising: Do morphology operations
+    Data_denoising --> ORB_extractor: Denoised image dataset List[np.array]
+    ORB_extractor: Detect keypoints and create descriptors
+
+}
+Image_preprocessing --> Codebook_building: Descriptors List[np.array]
+Codebook_building: Use k-Medoids
+Image_preprocessing --> Vector_encoding: Descriptors List[np.array]
+Vector_encoding: Vector Quantization
+Codebook_building --> Vector_encoding: Centroids, np.array of shape n_clusters x n_features
+Vector_encoding --> Model_training: Scaled encoded vector
+GridSearch --> Model_training: Hyperparameter tuning
+Model_training --> Model_saving: model.sav
+Model_saving --> Flask_app
+
+@enduml

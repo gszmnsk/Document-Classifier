@@ -2,9 +2,9 @@ import numpy as np
 import cv2
 import scipy.cluster.vq as vq
 import json
-import sklearn
-from sklearn.preprocessing import StandardScaler
-
+import joblib
+# from sklearn.preprocessing import StandardScaler
+scaler = joblib.load('std_scaler.pkl')
 
 
 class Preprocess:
@@ -66,7 +66,7 @@ class Preprocess:
         '''
         Loading a codebook from a json file
         '''
-        with open('codebook.json', 'rb') as handle:
+        with open(r'C:\Users\i\Documents\PROJECTS\SPM_docs\model_docs\flaskDocProject\codebook.json', 'r') as handle:
             codebook = json.load(handle)
         return codebook
 
@@ -94,11 +94,10 @@ class Preprocess:
         for w in words:
             image_features[0][w] += 1
 
-        standard_scaler = StandardScaler()
-        #image_features = standard_scaler.fit_transform(image_features)
-        #image_features_array = np.array(image_features)
-        return image_features
+        # standard_scaler = StandardScaler().fit(image_features)
+        image_features = scaler.transform(image_features)
 
+        return image_features
 
     def print_image_features(self):
         img_features = self.vector_encoder()
