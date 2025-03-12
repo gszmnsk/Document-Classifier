@@ -4,7 +4,7 @@ import scipy.cluster.vq as vq
 import json
 import joblib
 # from sklearn.preprocessing import StandardScaler
-scaler = joblib.load('std_scaler.pkl')
+scaler = joblib.load('../data/std_scaler.pkl')
 
 
 class Preprocess:

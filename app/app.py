@@ -2,8 +2,7 @@ from flask import Flask, render_template, request
 import pickle
 from PIL import Image
 import os
-import tensorflow as tf
-from DocClf_Test_Preprocessing import *
+from preprocessing.preprocessing_docs import *
 
 app = Flask(__name__)
 
@@ -29,7 +28,7 @@ def predict():
             image_file.save(image_path)
     # SVM
     encoded_image = Preprocess(image_path).vector_encoder()
-    svm_model = pickle.load(open('SVM_model.sav', 'rb'))
+    svm_model = pickle.load(open('../models/saved_models/SVM_model.sav', 'rb'))
     predicted = svm_model.predict(encoded_image)
     proba = svm_model.predict_proba(encoded_image)
     classification = None
